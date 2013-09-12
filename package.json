@@ -1,0 +1,15 @@
+{
+  "name": "grunt-angular-template",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gocardless-client/grunt-angular-template.git"
+  },
+  "bugs": {
+    "url": "http://github.com/gocardless-client/grunt-angular-template/issues"
+  },
+  "dependencies": {
+    "generate-angular-template": "git://github.com/gocardless-client/generate-angular-template.git"
+  },
+  "main": "angular-template"
+}
