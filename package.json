@@ -8,7 +8,7 @@
   "bugs": {
     "url": "http://github.com/gocardless-client/grunt-angular-template/issues"
   },
-  "main": "angular-template",
+  "main": "tasks/angular-template",
   "dependencies": {
     "generate-angular-template": "git://github.com/gocardless-client/generate-angular-template.git"
   },
