@@ -30,6 +30,7 @@ module.exports = function(grunt) {
     'Put angular templates in $templateCache.', function() {
 
     var options = this.options({
+      separator: grunt.util.linefeed,
       prependPrefix: '',
       stripPrefix: ''
     });
@@ -40,17 +41,31 @@ module.exports = function(grunt) {
       return prependPrefix + filepath.replace(stripPrefix, '');
     };
 
-    this.files.map(function(el) {
-      var filepath = el.src[0];
-      var htmlPath = cacheIdFromPath(filepath);
-      var content = grunt.file.read(filepath);
-      var template = generateAngularTemplate({
-        moduleName: options.moduleName,
-        htmlPath: htmlPath,
-        content: content
-      });
+    this.files.forEach(function(file) {
+      var src = file.src.filter(function(filepath) {
+        if (!grunt.file.exists(filepath)) {
+          grunt.log.warn('Source file "' + filepath + '" not found.');
+          return false;
+        } else {
+          return true;
+        }
+      }).map(function(filepath) {
+        var htmlPath = cacheIdFromPath(filepath);
+        var content = grunt.file.read(filepath);
+        var template = generateAngularTemplate({
+          moduleName: options.moduleName,
+          htmlPath: htmlPath,
+          content: content
+        });
 
-      grunt.file.write(el.dest, template);
+        return template;
+      }).join(options.separator);
+
+      // Write the destination file.
+      grunt.file.write(file.dest, src);
+
+      // Print a success message.
+      grunt.log.writeln('Template "' + file.dest + '" created.');
     });
 
   });
